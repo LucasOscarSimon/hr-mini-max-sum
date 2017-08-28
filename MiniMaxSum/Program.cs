@@ -1,22 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-class Solution
+using System.Text;
+using System.Threading.Tasks;
+
+namespace MinMaxSum
 {
-    static void Main(String[] args)
+    class Program
     {
-        string[] arr_temp = Console.ReadLine().Split(' ');
-        int[] arr = Array.ConvertAll(arr_temp, Int32.Parse);
-        string[] result = new string[arr.Length];
-        var strRes = string.Empty;
-        
-        for (int i = 0; i < arr.Length; i++)
+        static void Main(String[] args)
         {
-            result[i] = arr.Where(val => val != arr[i]).Sum().ToString();
+
+            string[] arr_temp = Console.ReadLine().Split(' ');
+            int[] arr = Array.ConvertAll(arr_temp, Int32.Parse);
+            string[] result = new string[arr.Length];
+            string[] resultEqualNums = new string[arr.Length];
+            var strRes = string.Empty;
+
+            for (int i = 0; i < arr.Length; i++)
+            {
+                result[i] = arr.Where(val => val != arr[i]).Sum().ToString();
+                resultEqualNums[i] = arr.Where(val => val == arr[i]).Skip(1).Sum().ToString();
+            }
+
+            if (result.Any(x => !string.IsNullOrEmpty(x)))
+                strRes = result.Min() + " " + result.Max();
+            else
+                strRes = resultEqualNums.Min() + " " + resultEqualNums.Max();
+
+            Console.WriteLine(strRes);
+            Console.ReadLine();
         }
-        strRes = result.Min() + " " + result.Max();
-        Console.WriteLine(strRes);
-        Console.ReadLine();
     }
 }
